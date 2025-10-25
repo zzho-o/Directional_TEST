@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from '@/styles/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './utils/i18n';
+import 'aos/dist/aos.css';
 
 const queryClient = new QueryClient();
 

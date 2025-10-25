@@ -1,19 +1,21 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePost, useUpdatePost } from '@/hooks/usePosts';
 import PostForm from '@/components/posts/PostForm';
+import { useTranslation } from 'react-i18next';
 
-export default function PostEditPage() {
+const PostEditPage = () => {
+  const { t } = useTranslation('posts');
   const { id = '' } = useParams();
   const nav = useNavigate();
   const { data, isLoading } = usePost(id);
   const { mutate, isPending } = useUpdatePost(id);
 
-  if (isLoading) return <div style={{ maxWidth: 760, margin: '24px auto' }}>불러오는 중…</div>;
-  if (!data) return <div style={{ maxWidth: 760, margin: '24px auto' }}>존재하지 않는 글입니다.</div>;
+  if (isLoading) return <div style={{ maxWidth: 760, margin: '24px auto' }}>{t('loading')}</div>;
+  if (!data) return <div style={{ maxWidth: 760, margin: '24px auto' }}>{t('notFound')}</div>;
 
   return (
     <div style={{ maxWidth: 760, margin: '24px auto' }}>
-      <h2>글 수정</h2>
+      <h2>{t('edit')}</h2>
       <PostForm
         mode="edit"
         initial={data}
@@ -22,4 +24,6 @@ export default function PostEditPage() {
       />
     </div>
   );
-}
+};
+
+export default PostEditPage;

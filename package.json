@@ -16,6 +16,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@types/styled-components": "^5.1.35",
+    "aos": "^2.3.4",
     "axios": "^1.12.2",
     "i18next": "^25.6.0",
     "react": "^19.2.0",
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "@vitejs/plugin-react-swc": "^4.1.0",

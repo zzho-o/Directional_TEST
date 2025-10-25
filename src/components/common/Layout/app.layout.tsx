@@ -4,11 +4,21 @@ import Footer from './app.footer';
 import { useLenis } from '@/hooks/useLenis';
 import { useEffect, useRef } from 'react';
 import { Main, Shell } from '@/styles/app.layout';
+import AOS from 'aos';
 
 const Layout = () => {
   const lenisRef = useLenis(); // 전역 싱글톤 Lenis를 반환하는 훅
   const loc = useLocation();
   const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 600,
+      easing: 'ease-out',
+      offset: 80,
+      mirror: true,
+    });
+  }, []);
 
   useEffect(() => {
     const lenis = lenisRef.current;

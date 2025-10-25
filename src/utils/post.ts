@@ -1,19 +1,21 @@
-export const RAW_FORBIDDEN = ['캄보디아', '프놈펜', '불법체류', '텔레그램', 'telegram'];
+export const RAW_FORBIDDEN = ['캄보디아', '프놈펜', '불법체류', '텔레그램', 'telegram'] as const;
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const norm = (s: string) => (s || '').normalize('NFKC').toLowerCase();
-const squash = (s: string) => norm(s).replace(/[\s\u00A0\u2000-\u200B\W_]+/g, '');
+
+const squash = (s: string) => norm(s).replace(/[^\p{L}\p{N}]+/gu, '');
 
 const FORBIDDEN_REGEX = (() => {
   const variants = RAW_FORBIDDEN.flatMap(w => {
     const n = norm(w);
     const s = squash(w);
-    return Array.from(new Set([n, s]));
+    return Array.from(new Set([n, s])).filter(v => v.length > 0);
   });
-  return new RegExp(`(${variants.map(esc).join('|')})`, 'i');
+
+  return new RegExp(`(${variants.map(esc).join('|')})`, 'iu');
 })();
 
-export const hasForbiddenWords = (...fields: string[]) => {
+export const hasForbiddenWords = (...fields: (string | undefined | null)[]) => {
   const joined = fields.filter(Boolean).join(' ');
   const collapsed = squash(joined);
   return FORBIDDEN_REGEX.test(collapsed);
