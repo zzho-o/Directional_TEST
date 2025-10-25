@@ -43,18 +43,6 @@ const Card = styled(Link)`
   }
 `;
 
-const Pill = styled.span<{ ok?: boolean }>`
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 13px;
-  background: ${({ ok }) => (ok ? 'rgba(16,185,129,.12)' : 'rgba(239,68,68,.12)')};
-  color: ${({ ok }) => (ok ? '#10B981' : '#EF4444')};
-  border: 1px solid rgba(255, 255, 255, 0.06);
-`;
-
 const Toolbar = styled.div`
   display: flex;
   gap: 8px;
@@ -70,20 +58,10 @@ const Btn = styled.button<{ tone?: 'primary' | 'ghost' }>`
   color: ${({ tone, theme }) => (tone === 'primary' ? theme.colors.white : theme.colors.text)};
 `;
 
-// ===== page =====
 export default function HomePage() {
   const navigate = useNavigate();
   const logout = useAuthStore(s => s.logout);
   const user = useAuthStore(s => s.user);
-
-  // API 헬스 체크
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['health'],
-    queryFn: apiHealth.get,
-    staleTime: 30_000,
-  });
-
-  const ok = !!data?.ok && !isError;
 
   return (
     <Wrap>
@@ -92,9 +70,8 @@ export default function HomePage() {
         <div style={{ color: '#9aa0a6' }}>과제 실행 패널입니다. 아래에서 게시판과 차트로 바로 이동할 수 있어요.</div>
 
         <Row style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-          <Pill ok={ok}>{isLoading ? 'Health: 체크 중…' : ok ? 'Health: OK' : 'Health: FAIL'}</Pill>
           <Toolbar>
-            <Btn onClick={() => refetch()}>헬스 재시도</Btn>
+            {/* <Btn onClick={() => refetch()}>헬스 재시도</Btn> */}
             <Btn tone="primary" onClick={() => navigate('/posts')}>
               게시판 바로가기
             </Btn>
