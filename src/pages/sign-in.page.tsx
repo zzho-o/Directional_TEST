@@ -1,14 +1,16 @@
+// src/pages/sign-in.page.tsx
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/common/ui/Button';
 import Input from '@/components/common/ui/Input';
 
 import { apiAuth } from '@/net/api';
 import { useAuthStore } from '@/stores/store.auth';
-import { typo } from '@/components/common/ui/Typo'; // 있다면
+import { typo } from '@/components/common/ui/Typo';
 
 const Wrap = styled.form`
   max-width: 420px;
@@ -39,18 +41,20 @@ const ErrorText = styled.p`
 `;
 
 export default function SignInPage() {
+  const { t } = useTranslation('auth'); // 🔹 auth 네임스페이스 사용
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
+
   const setAuth = useAuthStore(s => s.setAuth);
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const redirect = params.get('redirect') || '/home';
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: () => apiAuth.postAuthLogin(email, pw),
     onSuccess: data => {
       setAuth({ token: data?.token, user: data?.user });
-      console.log(data);
-      // navigate('/home', { replace: true });
+      navigate(redirect, { replace: true });
     },
   });
 
@@ -62,16 +66,22 @@ export default function SignInPage() {
 
   return (
     <Wrap onSubmit={onSubmit}>
-      <Title>로그인</Title>
-      <Helper>발급받은 이메일과 비밀번호를 입력하세요.</Helper>
+      <Title>{t('title')}</Title>
+      <Helper>{t('helper')}</Helper>
 
-      <Input placeholder="이메일" size="md" value={email} onChange={e => setEmail(e.target.value)} />
-      <Input type="password" placeholder="비밀번호" size="md" value={pw} onChange={e => setPw(e.target.value)} />
+      <Input placeholder={t('emailPlaceholder')} size="md" value={email} onChange={e => setEmail(e.target.value)} />
+      <Input
+        type="password"
+        placeholder={t('passwordPlaceholder')}
+        size="md"
+        value={pw}
+        onChange={e => setPw(e.target.value)}
+      />
 
-      {isError && <ErrorText>로그인 실패: {(error as Error)?.message ?? '다시 시도해 주세요.'}</ErrorText>}
+      {isError && <ErrorText>{t('error', { msg: (error as Error)?.message })}</ErrorText>}
 
       <Button size="lg" variant="primary" type="submit" disabled={isPending || !email || !pw}>
-        {isPending ? '확인 중…' : '로그인'}
+        {isPending ? t('submitting') : t('login')}
       </Button>
     </Wrap>
   );

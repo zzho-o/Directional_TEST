@@ -1,8 +1,5 @@
-// src/net/api.ts
 import axios from 'axios';
 import { useAuthStore } from '@/stores/store.auth';
-
-// ===== 타입들 (스웨거 기준) =====
 import type {
   LoginResp,
   Post,
@@ -84,7 +81,7 @@ export const apiPosts = {
   /** GET /posts/{id} : 단건 조회(본인) */
   get: (id: string) => API.get<Post>(`/posts/${id}`),
 
-  /** PATCH /posts/{id} : 부분 수정(최소 1개 필드) */
+  /** PATCH /posts/{id} : 수정 */
   update: (id: string, patch: PostUpdateRequest) => API.patch<Post>(`/posts/${id}`, patch),
 
   /** DELETE /posts/{id} : 단건 삭제 */
@@ -100,13 +97,3 @@ export const apiWeeklyMoodTrend = () => API.get<WeeklyMoodTrendResponse>('/mock/
 
 // 3) GET /mock/coffee-consumption : { teams: [{ team, series: [{cups,bugs,productivity}, ...]}] }
 export const apiCoffeeConsumption = () => API.get<CoffeeConsumptionResponse>('/mock/coffee-consumption');
-
-// (선택) 라인차트 편의: 팀별 데이터를 평탄화
-export type CoffeePointFlat = {
-  team: string;
-  cups: number;
-  bugs: number;
-  productivity: number;
-};
-export const flattenCoffeeTeams = (data: CoffeeConsumptionResponse): CoffeePointFlat[] =>
-  data.teams.flatMap(t => t.series.map(s => ({ team: t.team, ...s })));
