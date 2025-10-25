@@ -1,15 +1,8 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiPosts } from '@/net/api';
-import type {
-  PostsQueryReq,
-  Post,
-  PostCreateRequest,
-  PostUpdateRequest,
-  DeleteResponse,
-  PostsListResp,
-} from '@/net/type';
+import type { PostsQueryReq, PostCreateRequest, PostUpdateRequest, PostsListResp } from '@/net/type';
 
-export function usePostList(params: Omit<PostsQueryReq, 'prevCursor' | 'nextCursor'> & { limit?: number }) {
+export const usePostList = (params: Omit<PostsQueryReq, 'prevCursor' | 'nextCursor'> & { limit?: number }) => {
   return useInfiniteQuery({
     queryKey: ['posts', params],
     queryFn: ({ pageParam }) =>
@@ -17,25 +10,25 @@ export function usePostList(params: Omit<PostsQueryReq, 'prevCursor' | 'nextCurs
     getNextPageParam: (lastPage: PostsListResp) => lastPage.nextCursor ?? undefined,
     initialPageParam: undefined as string | undefined,
   });
-}
+};
 
-export function usePost(id: string) {
+export const usePost = (id: string) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => apiPosts.get(id),
     enabled: !!id,
   });
-}
+};
 
-export function useCreatePost() {
+export const useCreatePost = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: PostCreateRequest) => apiPosts.create(payload),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['posts'] }),
   });
-}
+};
 
-export function useUpdatePost(id: string) {
+export const useUpdatePost = (id: string) => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (patch: PostUpdateRequest) => apiPosts.update(id, patch),
@@ -44,9 +37,9 @@ export function useUpdatePost(id: string) {
       qc.invalidateQueries({ queryKey: ['posts'] });
     },
   });
-}
+};
 
-export function useRemovePost() {
+export const useRemovePost = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => apiPosts.remove(id),
@@ -54,12 +47,12 @@ export function useRemovePost() {
       qc.invalidateQueries({ queryKey: ['posts'] });
     },
   });
-}
+};
 
-export function useRemoveAllPosts() {
+export const useRemoveAllPosts = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: () => apiPosts.removeAll(),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['posts'] }),
   });
-}
+};

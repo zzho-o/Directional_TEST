@@ -1,7 +1,7 @@
 import { Outlet, Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '@/stores/store.auth';
 
-export default function PublicOnlyRoute() {
+const PublicOnlyRoute = () => {
   const isAuthed = useAuthStore(s => s.isAuthed);
   const location = useLocation();
   const [params] = useSearchParams();
@@ -11,4 +11,6 @@ export default function PublicOnlyRoute() {
     return <Navigate to={to} replace state={{ from: location }} />;
   }
   return <Outlet />;
-}
+};
+
+export default PublicOnlyRoute;

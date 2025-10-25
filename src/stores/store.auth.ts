@@ -1,4 +1,3 @@
-// src/stores/store.auth.ts
 import { create } from 'zustand';
 import { AuthState, User } from './type';
 
@@ -9,7 +8,6 @@ export const useAuthStore = create<AuthState>(set => ({
   token: localStorage.getItem(TK),
   user: (() => {
     const raw = localStorage.getItem(US);
-    console.log(typeof raw);
     return raw ? (JSON.parse(raw) as User) : null;
   })(),
   isAuthed: !!localStorage.getItem(TK),

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Lenis, { type LenisOptions } from '@studio-freight/lenis';
 
-export function useLenis(opts?: Partial<LenisOptions>) {
+export const useLenis = (opts?: Partial<LenisOptions>) => {
   const ref = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -25,4 +25,4 @@ export function useLenis(opts?: Partial<LenisOptions>) {
   }, []);
 
   return ref;
-}
+};

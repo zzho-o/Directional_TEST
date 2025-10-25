@@ -9,6 +9,7 @@ import PostNewPage from '@/pages/posts/posts.create';
 import PostEditPage from '@/pages/posts/posts.update';
 import PostsPage from './pages/posts/posts.page';
 import ChartsPage from './pages/charts.page';
+import NotFoundPage from './not-found';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="posts/:id" element={<PostEditPage />} />
           <Route path="charts" element={<ChartsPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

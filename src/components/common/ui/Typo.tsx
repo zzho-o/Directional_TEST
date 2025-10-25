@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 
 export const typo = {
   /** 12px */
@@ -30,8 +30,3 @@ export const typo = {
     font-weight: 600;
   `,
 } as const;
-
-/** 필요 시 바로 쓰는 텍스트 컴포넌트 */
-export const Text = styled.span<{ variant?: keyof typeof typo }>`
-  ${({ variant = 'body' }) => typo[variant]}
-`;

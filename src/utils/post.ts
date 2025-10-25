@@ -13,14 +13,14 @@ const FORBIDDEN_REGEX = (() => {
   return new RegExp(`(${variants.map(esc).join('|')})`, 'i');
 })();
 
-export function hasForbiddenWords(...fields: string[]) {
+export const hasForbiddenWords = (...fields: string[]) => {
   const joined = fields.filter(Boolean).join(' ');
   const collapsed = squash(joined);
   return FORBIDDEN_REGEX.test(collapsed);
-}
+};
 
-export function normalizeTags(input: string[] | string): string[] {
+export const normalizeTags = (input: string[] | string): string[] => {
   const arr = Array.isArray(input) ? input : input.split(',').map(s => s.trim());
   const uniq = Array.from(new Set(arr.filter(Boolean)));
   return uniq.slice(0, 5).map(t => t.slice(0, 24));
-}
+};

@@ -1,4 +1,3 @@
-// src/components/ui/Input.tsx (충돌 방지: Omit<'size'> 적용 유지)
 import styled, { css } from 'styled-components';
 import { InputHTMLAttributes } from 'react';
 import { typo } from './Typo';
