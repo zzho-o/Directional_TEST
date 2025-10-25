@@ -8,6 +8,7 @@ import HomePage from '@/pages/home.page';
 import PostNewPage from '@/pages/posts/posts.create';
 import PostEditPage from '@/pages/posts/posts.update';
 import PostsPage from './pages/posts/posts.page';
+import ChartsPage from './pages/charts.page';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="posts" element={<PostsPage />} />
           <Route path="posts/new" element={<PostNewPage />} />
           <Route path="posts/:id" element={<PostEditPage />} />
+          <Route path="charts" element={<ChartsPage />} />
         </Route>
       </Route>
     </Routes>
