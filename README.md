@@ -27,7 +27,6 @@ yarn preview
 
 # ESLint
 yarn lint
-주의: 본 프로젝트는 yarn만 사용합니다. 루트에 있는 package-lock.json은 npm 전용 lockfile이므로 삭제 권장입니다(의도치 않은 충돌 방지).
 
 🔐 환경 변수
 루트에 .env.local 생성:
@@ -35,36 +34,32 @@ yarn lint
 bash
 코드 복사
 VITE_API_URL=https://fe-hiring-rest-api.vercel.app
-프로덕션 배포 시에는 환경에 맞는 .env.production을 주입하세요.
 
-🧰 기술 스택 (package.json 기준)
+🧰 기술 스택
 Framework & Build: React 19, Vite 7, TypeScript 5
 
-Routing: react-router-dom ^7
+Routing: react-router-dom 7
 
-상태/데이터: Zustand ^5, TanStack Query ^5 (+ Devtools)
+상태/데이터: Zustand 5, TanStack Query 5 (+ Devtools)
 
-스타일: styled-components ^6 (테마/디자인 토큰), Prettier
+스타일: styled-components 6 (테마/디자인 토큰), Prettier
 
-차트: Recharts ^3
+차트: Recharts 3
 
-i18n: i18next ^25, react-i18next ^16
+i18n: i18next 25, react-i18next 16
 
-UX: @studio-freight/lenis ^1, AOS ^2
+UX: @studio-freight/lenis 1, AOS 2
 
-폼/검증: react-hook-form ^7, zod ^4, @hookform/resolvers
+폼/검증: react-hook-form 7, zod 4, @hookform/resolvers
 
-네트워킹: axios ^1
+네트워킹: axios 1
 
-품질: ESLint ^9, eslint-plugin-react-hooks, eslint-config-prettier
+품질: ESLint 9, eslint-plugin-react-hooks, eslint-config-prettier
 
-Vite 플러그인: @vitejs/plugin-react-swc ^4
+Vite 플러그인: @vitejs/plugin-react-swc 4
 
-테스트 관련 패키지(@testing-library/*, @types/jest)는 포함돼 있지만, 테스트 스크립트는 아직 정의되어 있지 않습니다. 필요 시 yarn test 스크립트를 추가하세요.
+📁 프로젝트 구조
 
-📁 프로젝트 구조 (현재 트리 반영)
-pgsql
-코드 복사
 src/
   App.tsx
   index.tsx
@@ -74,7 +69,7 @@ src/
   components/
     charts/
       ChartBox.tsx
-      CoffeMultiLine.tsx   # ⬅️ 파일명 오타(Coffe). import 시 동일하게 사용하거나 'CoffeeMultiLine.tsx'로 정정 권장
+      CoffeMultiLine.tsx
       TopBrands.tsx
       WeeklyMood.tsx
     common/
@@ -142,8 +137,6 @@ src/
     i18n.ts
     post.ts             # 금칙어/태그 유틸
     regexps.ts
-루트/public 양쪽에 index.html이 있습니다. Vite는 루트의 index.html을 사용하므로, public/index.html은 불필요하다면 정리하세요.
-빌드 결과물은 dist/에 생성되며, assets/, index.html, manifest.json, robots.txt가 포함됩니다.
 
 📰 게시판(Posts) 요약
 CRUD(목록/조회/작성/수정/삭제)
