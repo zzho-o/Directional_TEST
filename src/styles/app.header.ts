@@ -50,15 +50,15 @@ export const IconBtn = styled(Btn)`
   justify-content: center;
 `;
 
-export const Pill = styled.span<{ ok?: boolean }>`
+export const Pill = styled.span<{ $ok?: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 13px;
-  background: ${({ ok }) => (ok ? 'rgba(16,185,129,.12)' : 'rgba(239,68,68,.12)')};
-  color: ${({ ok }) => (ok ? '#10B981' : '#EF4444')};
+  background: ${({ $ok }) => ($ok ? 'rgba(16,185,129,.12)' : 'rgba(239,68,68,.12)')};
+  color: ${({ $ok }) => ($ok ? '#10B981' : '#EF4444')};
   border: 1px solid rgba(255, 255, 255, 0.06);
   white-space: nowrap;
 `;

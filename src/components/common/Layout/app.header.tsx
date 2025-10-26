@@ -29,7 +29,7 @@ const Header = () => {
       {isAuthed ? <Btn onClick={() => nav('/home')}>{t('Home')}</Btn> : <div>{t('brand')}</div>}
 
       <Group>
-        <Pill ok={ok}>{isLoading || isFetching ? 'Health: 체크 중…' : ok ? 'Health: OK' : 'Health: FAIL'}</Pill>
+        <Pill $ok={ok}>{isLoading || isFetching ? 'Health: 체크 중…' : ok ? 'Health: OK' : 'Health: FAIL'}</Pill>
 
         {/* 데스크톱: 텍스트 버튼 2개 */}
         <HideOnMobile>

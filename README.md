@@ -1,46 +1,207 @@
-# Getting Started with Create React App
+# 🚀 Directional FE Hiring – Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React + Vite + TypeScript 기반 데모 앱입니다.  
+과제 요구사항(**게시판 + 차트 + 인증 + i18n**)을 모두 만족합니다.
 
-## Available Scripts
+- **게시판**: 작성/조회/수정/삭제, 검색, 정렬, 카테고리 필터, 커서 기반 페이지네이션, 금칙어 필터
+- **차트**: 도넛(TopBrands), 스택형 바/면적(WeeklyMood), 팀별 멀티라인(CoffeeMultiLine)
+- **i18n**: ko/en 전환
+- **인증**: JWT 로그인, 보호/공개 라우트 가드
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ⚙️ 빠른 시작
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+# 의존성 설치 (yarn만 사용)
+yarn install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# 로컬 개발
+yarn dev
 
-### `npm test`
+# 프로덕션 빌드
+yarn build
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 빌드 결과 미리보기
+yarn preview
 
-### `npm run build`
+# ESLint
+yarn lint
+주의: 본 프로젝트는 yarn만 사용합니다. 루트에 있는 package-lock.json은 npm 전용 lockfile이므로 삭제 권장입니다(의도치 않은 충돌 방지).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🔐 환경 변수
+루트에 .env.local 생성:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+bash
+코드 복사
+VITE_API_URL=https://fe-hiring-rest-api.vercel.app
+프로덕션 배포 시에는 환경에 맞는 .env.production을 주입하세요.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+🧰 기술 스택 (package.json 기준)
+Framework & Build: React 19, Vite 7, TypeScript 5
 
-### `npm run eject`
+Routing: react-router-dom ^7
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+상태/데이터: Zustand ^5, TanStack Query ^5 (+ Devtools)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+스타일: styled-components ^6 (테마/디자인 토큰), Prettier
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+차트: Recharts ^3
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+i18n: i18next ^25, react-i18next ^16
 
-## Learn More
+UX: @studio-freight/lenis ^1, AOS ^2
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+폼/검증: react-hook-form ^7, zod ^4, @hookform/resolvers
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+네트워킹: axios ^1
+
+품질: ESLint ^9, eslint-plugin-react-hooks, eslint-config-prettier
+
+Vite 플러그인: @vitejs/plugin-react-swc ^4
+
+테스트 관련 패키지(@testing-library/*, @types/jest)는 포함돼 있지만, 테스트 스크립트는 아직 정의되어 있지 않습니다. 필요 시 yarn test 스크립트를 추가하세요.
+
+📁 프로젝트 구조 (현재 트리 반영)
+pgsql
+코드 복사
+src/
+  App.tsx
+  index.tsx
+  index.css
+  not-found.tsx
+
+  components/
+    charts/
+      ChartBox.tsx
+      CoffeMultiLine.tsx   # ⬅️ 파일명 오타(Coffe). import 시 동일하게 사용하거나 'CoffeeMultiLine.tsx'로 정정 권장
+      TopBrands.tsx
+      WeeklyMood.tsx
+    common/
+      Layout/
+        app.header.tsx
+        app.footer.tsx
+        app.layout.tsx
+      icons/
+        commons.tsx
+      ui/
+        Button.tsx
+        Input.tsx
+        Modal.tsx
+        TextArea.tsx
+        Typo.tsx
+
+  hooks/
+    useHealth.ts
+    useIntersection.ts
+    useLenis.ts
+    usePosts.ts
+
+  net/
+    api.ts
+    type.ts
+
+  pages/
+    home.page.tsx
+    sign-in.page.tsx
+    charts.page.tsx
+    posts/
+      posts.page.tsx
+      posts.create.tsx
+      posts.update.tsx
+
+  routes/
+    PermissionGuard.tsx
+    ProtectedRoute.tsx
+    PublicOnlyRoute.tsx
+
+  stores/
+    store.auth.ts
+    type.ts
+
+  styles/
+    theme.ts
+    styled.d.ts
+    app.header.ts
+    app.footer.ts
+    app.layout.ts
+    home.page.ts
+    charts.page.ts
+    posts.page.ts
+    sign-in.page.ts
+    PostCard.ts
+    PostFilters.ts
+    PostForm.ts
+    PostReadModal.ts
+
+  types/
+    axios.d.ts
+
+  utils/
+    chart.ts            # adaptCoffeeConsumption / flattenCoffeeTeams
+    i18n.ts
+    post.ts             # 금칙어/태그 유틸
+    regexps.ts
+루트/public 양쪽에 index.html이 있습니다. Vite는 루트의 index.html을 사용하므로, public/index.html은 불필요하다면 정리하세요.
+빌드 결과물은 dist/에 생성되며, assets/, index.html, manifest.json, robots.txt가 포함됩니다.
+
+📰 게시판(Posts) 요약
+CRUD(목록/조회/작성/수정/삭제)
+
+검색(제목+본문), 정렬(createdAt/title), 카테고리(NOTICE/QNA/FREE)
+
+커서 기반 페이지네이션(무한 스크롤)
+
+금칙어 필터(자모/공백/기호 변형 대응)
+
+태그: 중복 제거, 최대 5개, 각 24자
+
+i18n 기반 폼/오류 메시지
+
+📊 차트(Charts) 요약
+TopBrands: 도넛 & 막대 / 브랜드명·툴팁·레전드 i18n / 핑크 팔레트
+
+WeeklyMood: 스택형 Area/Bar (stackOffset="expand" → % 시각화)
+
+CoffeeMultiLine:
+
+X축: 커피 잔 수(cups)
+
+좌 Y축: 버그(bugs, 실선) / 우 Y축: 생산성(productivity, 점선)
+
+팀 컬러/마커(원·사각형) 일관성, 툴팁 요약
+
+adaptCoffeeConsumption()으로 응답 스키마 차이(series/data) 흡수 → flattenCoffeeTeams()로 납작화
+
+🔌 API 요약
+Auth: POST /auth/login (JWT)
+
+Posts:
+
+GET /posts (커서 기반)
+
+POST /posts
+
+GET /posts/:id
+
+PATCH /posts/:id
+
+DELETE /posts/:id, DELETE /posts (내 모든 글 삭제)
+
+Mock:
+
+GET /mock/top-coffee-brands
+
+GET /mock/weekly-mood-trend
+
+GET /mock/coffee-consumption
+
+응답 타입은 src/net/type.ts 참고 (Swagger 정의와 합치).
+
+🌐 i18n
+리소스: public/locales/{ko,en}/…
+
+차트/폼/오류 등 전역 문구 i18n 적용
+
+브랜드명/툴팁/범례 문자열도 i18n 키 매핑
+```

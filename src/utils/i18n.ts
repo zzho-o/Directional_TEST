@@ -87,6 +87,36 @@ const resources = {
       err_forbidden: '금칙어(캄보디아/프놈펜/불법체류/텔레그램)가 포함되어 등록할 수 없습니다.',
       err_no_changes: '변경된 내용이 없습니다.',
     },
+    charts: {
+      title_brands_donut: '인기 커피 브랜드 (도넛)',
+      title_brands_bar: '브랜드 분포 (막대)',
+      title_weekly_area: '주간 무드 (스택 면적)',
+      title_weekly_bar: '주간 무드 (스택 바)',
+      title_coffee_multi: '커피 섭취량 vs 버그/생산성 (팀별)',
+      legend_popularity: '인기도',
+      brands: {
+        starbucks: '스타벅스',
+        composecoffee: '컴포즈커피',
+        coffeebean: '커피빈',
+        banapresso: '바나프레소',
+        others: '기타',
+      },
+
+      series_happy: '행복',
+      series_tired: '피곤',
+      series_stressed: '스트레스',
+
+      axis_cups_per_day: '잔/일',
+      axis_bugs: 'Bugs',
+      axis_prod: 'Productivity',
+
+      tooltip_team: '{{team}}',
+      tooltip_cups: '잔수: {{value}}',
+      tooltip_bugs: '버그: {{value}}',
+      tooltip_prod: '생산성: {{value}}',
+
+      tooltip_percent: '{{value}}%',
+    },
     notFound: {
       title: '404',
       desc: '페이지를 찾을 수 없어요. 주소를 다시 확인해주세요.',
@@ -172,6 +202,37 @@ Seoul, Republic of Korea`,
       err_forbidden: 'Contains forbidden words (Cambodia/Phnom Penh/Illegal stay/Telegram).',
       err_no_changes: 'No changes.',
     },
+    charts: {
+      title_brands_donut: 'Top Coffee Brands (Donut)',
+      title_brands_bar: 'Brand Distribution (Bar)',
+      title_weekly_area: 'Weekly Mood (Stacked Area)',
+      title_weekly_bar: 'Weekly Mood (Stacked Bar)',
+      title_coffee_multi: 'Coffee Intake vs Bugs/Productivity (by Team)',
+      legend_popularity: 'Popularity',
+
+      brands: {
+        starbucks: 'Starbucks',
+        composecoffee: 'Compose Coffee',
+        coffeebean: 'The Coffee Bean',
+        banapresso: 'Banapresso',
+        others: 'Others',
+      },
+
+      series_happy: 'happy',
+      series_tired: 'tired',
+      series_stressed: 'stressed',
+
+      axis_cups_per_day: 'cups/day',
+      axis_bugs: 'Bugs',
+      axis_prod: 'Productivity',
+
+      tooltip_team: '{{team}}',
+      tooltip_cups: 'Cups: {{value}}',
+      tooltip_bugs: 'Bugs: {{value}}',
+      tooltip_prod: 'Productivity: {{value}}',
+
+      tooltip_percent: '{{value}}%',
+    },
     notFound: {
       title: '404',
       desc: 'We couldn’t find the page you requested.',
@@ -186,7 +247,7 @@ i18n.use(initReactI18next).init({
   lng: initialLng,
   fallbackLng: 'ko',
   supportedLngs: ['ko', 'en'],
-  ns: ['common', 'auth'],
+  ns: ['common', 'auth', 'charts', 'posts'],
   defaultNS: 'common',
   interpolation: { escapeValue: false },
 });

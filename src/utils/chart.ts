@@ -1,11 +1,24 @@
-import { CoffeeConsumptionResponse } from '@/net/type';
+import type { CoffeeConsumptionResponse } from '@/net/type';
 
-// 라인차트 편의: 팀별 데이터를 평탄화
-export type CoffeePointFlat = {
-  team: string;
-  cups: number;
-  bugs: number;
-  productivity: number;
+export function adaptCoffeeConsumption(input: any): CoffeeConsumptionResponse {
+  if (!input || !Array.isArray(input.teams)) return { teams: [] };
+
+  return {
+    teams: input.teams.map((t: any) => ({
+      team: t?.team ?? t?.name ?? 'Unknown',
+      series: Array.isArray(t?.series) ? t.series : Array.isArray(t?.data) ? t.data : [],
+    })),
+  };
+}
+
+export const flattenCoffeeTeams = (resp?: CoffeeConsumptionResponse) => {
+  const teams = resp?.teams ?? [];
+  return teams.flatMap(team =>
+    (team.series ?? []).map(d => ({
+      team: team.team,
+      cups: d.cups,
+      bugs: d.bugs,
+      productivity: d.productivity,
+    })),
+  );
 };
-export const flattenCoffeeTeams = (data: CoffeeConsumptionResponse): CoffeePointFlat[] =>
-  data.teams.flatMap(t => t.series.map(s => ({ team: t.team, ...s })));
