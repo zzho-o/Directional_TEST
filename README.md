@@ -44,7 +44,7 @@ Framework & Build: React 19, Vite 7, TypeScript 5
 
 Routing: react-router-dom 7
 
-상태/데이터: Zustand 5, TanStack Query 5 (+ Devtools)
+상태/데이터: Zustand 5, TanStack Query 5
 
 스타일: styled-components 6 (테마/디자인 토큰), Prettier
 
@@ -65,82 +65,83 @@ Vite 플러그인: @vitejs/plugin-react-swc 4
 📁 프로젝트 구조
 
 src/
-  App.tsx
+  App.tsx                         — 라우팅 구성 및 전역 레이아웃 진입
   index.tsx
   index.css
-  not-found.tsx
+  not-found.tsx                   — 404 페이지
 
   components/
     charts/
-      ChartBox.tsx
-      CoffeMultiLine.tsx
-      TopBrands.tsx
-      WeeklyMood.tsx
+      ChartBox.tsx                — 차트 공통 카드 래퍼(UI/여백/제목)
+      CoffeMultiLine.tsx          — 팀별 버그·생산성 멀티라인 차트
+      TopBrands.tsx               — 도넛/막대(브랜드 인기) 차트
+      WeeklyMood.tsx              — 스택형 면적/바(주간 무드) 차트
     common/
       Layout/
         app.header.tsx
         app.footer.tsx
-        app.layout.tsx
+        app.layout.tsx            — 페이지 공통 레이아웃(고정 헤더, Lenis, AOS)
       icons/
-        commons.tsx
+        commons.tsx               — 재사용 아이콘 모음
       ui/
-        Button.tsx
-        Input.tsx
-        Modal.tsx
-        TextArea.tsx
-        Typo.tsx
+        Button.tsx                — 버튼 컴포넌트(variant/size)
+        Input.tsx                 — 인풋 컴포넌트(스타일 일관)
+        Modal.tsx                 — 기본 모달 오버레이/바디
+        TextArea.tsx              — 텍스트영역(입력 스타일 일관)
+        Typo.tsx                  — 타이포 스케일/믹스인
 
   hooks/
-    useHealth.ts
-    useIntersection.ts
-    useLenis.ts
-    usePosts.ts
+    useHealth.ts                  — /health 쿼리 훅
+    useIntersection.ts            — 무한스크롤 IntersectionObserver 훅
+    useLenis.ts                   — 부드러운 스크롤 Lenis 싱글턴 훅
+    usePosts.ts                   — 게시글 조회/상세/CRUD 뮤테이션 훅
 
   net/
-    api.ts
-    type.ts
+    api.ts                        — axios 인스턴스/인터셉터, API 함수 모음
+    type.ts                       — 스웨거 기반 네트워크 타입 정의
 
   pages/
-    home.page.tsx
-    sign-in.page.tsx
-    charts.page.tsx
+    home.page.tsx                 — 홈(허브) 화면
+    sign-in.page.tsx              — 로그인 화면(RHF + zod)
+    charts.page.tsx               — 차트 데모 페이지
     posts/
-      posts.page.tsx
-      posts.create.tsx
-      posts.update.tsx
+      posts.page.tsx              — 게시판 목록(필터/무한스크롤/모달읽기)
+      posts.create.tsx            — 새 글 작성 페이지
+      posts.update.tsx            — 글 수정 페이지
 
   routes/
-    PermissionGuard.tsx
-    ProtectedRoute.tsx
-    PublicOnlyRoute.tsx
+    PermissionGuard.tsx           — (확장용) 권한 가드 자리
+    ProtectedRoute.tsx            — 인증 필요 라우트 가드
+    PublicOnlyRoute.tsx           — 비인증 전용(로그인 상태면 리다이렉트)
+    PostReadModal.tsx             - 읽기전용 모달
 
   stores/
-    store.auth.ts
-    type.ts
+    store.auth.ts                 — 인증 상태(Zustand)
+    type.ts                       — 스토어 관련 타입
 
   styles/
-    theme.ts
-    styled.d.ts
-    app.header.ts
-    app.footer.ts
-    app.layout.ts
-    home.page.ts
-    charts.page.ts
-    posts.page.ts
-    sign-in.page.ts
-    PostCard.ts
-    PostFilters.ts
-    PostForm.ts
-    PostReadModal.ts
+    theme.ts                      — 디자인 토큰(색상/라운딩 등)
+    styled.d.ts                   — styled-components 타입 보강
+    app.header.ts                 — 헤더 스타일
+    app.footer.ts                 — 푸터 스타일
+    app.layout.ts                 — 레이아웃/메인 컨테이너 스타일
+    home.page.ts                  — 홈 페이지 스타일
+    charts.page.ts                — 차트 페이지 스타일
+    posts.page.ts                 — 게시판 페이지 스타일
+    sign-in.page.ts               — 로그인 페이지 스타일
+    PostCard.ts                   — 카드 컴포넌트 스타일(분리)
+    PostFilters.ts                — 필터 바 스타일
+    PostForm.ts                   — 폼 스타일
+    PostReadModal.ts              — 읽기 모달 스타일
 
   types/
-    axios.d.ts
+    axios.d.ts                    — axios 모듈 타입 보강/전역 선언
 
   utils/
-    chart.ts            # adaptCoffeeConsumption / flattenCoffeeTeams
-    i18n.ts
-    post.ts             # 금칙어/태그 유틸
-    regexps.ts
+    chart.ts                      — 차트 데이터 어댑트/플랫 변환 헬퍼
+    i18n.ts                       — i18next 초기화 및 리소스
+    post.ts                       — 금칙어 검사/태그 정규화 유틸
+    regexps.ts                    — 정규식 모음(이메일 등)
 
 📰 게시판(Posts) 요약
 CRUD(목록/조회/작성/수정/삭제)
