@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (Yarn)
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GITHUB_PAGES: 'true'
+      BASE_PATH: '/${{ github.event.repository.name }}/'
       API_URL: ${{ secrets.API_URL }}
     steps:
       - name: Checkout
@@ -27,17 +27,32 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: yarn
 
-      - name: Install
-        run: npm ci
+      - name: Enable Corepack if Yarn Berry is present
+        run: |
+          if [ -d ".yarn" ]; then
+            corepack enable
+          fi
+
+      - name: Adjust BASE_PATH for user/org pages
+        if: ${{ endsWith(github.event.repository.name, '.github.io') }}
+        run: echo "BASE_PATH=/" >> $GITHUB_ENV
+
+      - name: Install deps (Yarn)
+        run: |
+          if [ -d ".yarn" ]; then
+            yarn install --immutable || yarn install
+          else
+            yarn install --frozen-lockfile
+          fi
 
       - name: Create .env.production
         run: |
           echo "VITE_API_URL=${API_URL:-https://fe-hiring-rest-api.vercel.app}" > .env.production
 
       - name: Build
-        run: npm run build
+        run: yarn build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
