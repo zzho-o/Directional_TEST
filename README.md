@@ -8,6 +8,10 @@ React + Vite + TypeScript 기반 데모 앱입니다.
 - **i18n**: ko/en 전환
 - **인증**: JWT 로그인, 보호/공개 라우트 가드
 
+## 🌐 배포 주소
+
+- **GitHub Pages**: https://zzho-o.github.io/Directional_TEST/
+
 ---
 
 ## ⚙️ 빠른 시작
