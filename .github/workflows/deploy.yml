@@ -1,71 +1,34 @@
-name: Deploy to GitHub Pages (Yarn)
+name: Deploy to GitHub Pages (Vite + Yarn)
 
 on:
   push:
-    branches: [master]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      BASE_PATH: '/${{ github.event.repository.name }}/'
-      API_URL: ${{ secrets.API_URL }}
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
 
-      - name: Enable Corepack if Yarn Berry is present
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build project
         run: |
-          if [ -d ".yarn" ]; then
-            corepack enable
-          fi
+          export BASE_PATH="/chart_board/"
+          yarn build
 
-      - name: Adjust BASE_PATH for user/org pages
-        if: ${{ endsWith(github.event.repository.name, '.github.io') }}
-        run: echo "BASE_PATH=/" >> $GITHUB_ENV
-
-      - name: Install deps (Yarn)
-        run: |
-          if [ -d ".yarn" ]; then
-            yarn install --immutable || yarn install
-          else
-            yarn install --frozen-lockfile
-          fi
-
-      - name: Create .env.production
-        run: |
-          echo "VITE_API_URL=${API_URL:-https://fe-hiring-rest-api.vercel.app}" > .env.production
-
-      - name: Build
-        run: yarn build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
