@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages (Yarn)
 on:
   push:
     branches: [main]
-
 permissions:
   contents: read
   pages: write
